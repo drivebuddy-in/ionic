@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title slot="start">
+      Device
+    </ion-title>
+    <ion-title slot="end">
+      <ion-icon name="wifi-outline" size="large" [color]="networkStatus && networkStatus.connected ? 'success' : 'dark'"></ion-icon>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +12,25 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Device</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ng-container>
+    <ion-card *ngIf="deviceInfo">
+      <ion-card-header>
+        <ion-card-subtitle>Device</ion-card-subtitle>
+        <ion-card-title>Information</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ng-container *ngFor="let item of deviceInfo | keyvalue">
+        <ion-item lines="none">{{item.key | titlecase}} - {{item.value}}</ion-item>
+      </ng-container>
+      <ng-container *ngIf="batteryInfo">
+        <ion-item lines="none">Battery Status: {{batteryInfo.batteryLevel}} - IsCharging: {{batteryInfo.isCharging}}</ion-item>
+      </ng-container>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 </ion-content>
